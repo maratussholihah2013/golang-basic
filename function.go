@@ -42,6 +42,15 @@ func main() {
 	//recursive
 	recursive := factorialRecursive(5)
 	fmt.Println(recursive)
+
+	//untuk melihat defer
+	runApllication(10)
+	//harusnya 0 akan memunculkan error namun karena terdapat defer logging
+	//maka akan muncul penyebab error pada runApplication dan func logging tetap jalan
+	runApllication(0)
+
+	//recover
+	runTheApp()
 }
 
 func sayHello() {
@@ -127,5 +136,38 @@ func factorialRecursive(value int) int {
 		return 1
 	} else {
 		return value * factorialRecursive(value-1)
+	}
+}
+
+//function defer -> function yang tetap dijalankan meski ada error/sukses
+func logging() {
+	fmt.Println("Selesai menjalankan tugas")
+}
+func runApllication(value int) {
+	defer logging()
+	fmt.Println("Run Application")
+	result := 10 / value
+	fmt.Println("Result ", result)
+}
+
+//panic function -> dijalankan ketika terdapat error, lalu aplikasi berhenti
+func endApp() {
+	fmt.Println("Aplikasi selesai")
+	message := recover()
+	fmt.Println("Error data: ", message)
+}
+func runApp(error bool) {
+	defer endApp()
+	if error {
+		panic("Aplikasi Error")
+	}
+	fmt.Println("Aplikasi berjalan")
+}
+
+//recover function, menangkap data error dan menjalankan aplikasi setelah apnic
+func runTheApp() {
+	defer endApp()
+	if error {
+		panic("APlikasi error")
 	}
 }
