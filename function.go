@@ -168,6 +168,6 @@ func runApp(error bool) {
 func runTheApp() {
 	defer endApp()
 	if error {
-		panic("APlikasi error")
+		panic("Aplikasi error")
 	}
 }
